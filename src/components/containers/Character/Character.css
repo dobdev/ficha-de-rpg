@@ -1,0 +1,13 @@
+.form-element {
+    min-width: 320px;
+}
+
+.form-element input{
+    min-width: 320px;
+    margin: auto;
+}
+
+.form-element select{
+    min-width: 320px;
+    margin: auto;
+}

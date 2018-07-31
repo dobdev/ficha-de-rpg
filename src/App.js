@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Character from '../src/components/containers/Character/Character'
+import Teste from '../src/components/containers/Teste/Teste'
 import logo from './logo.svg';
 import './App.css';
 
@@ -11,7 +12,8 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <Character />
+        {/* <Character /> */}
+        <Teste/>
       </div>
     );
   }
