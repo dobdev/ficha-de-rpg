@@ -9,21 +9,25 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import './Character.css';
 
+import '../../../services/localDatabase/indexedDB.js'
+
 class Character extends Component {
     constructor() {
         super();
         
         this.character = new CharacterModel();
-        this.character.Name = 'David';
+        this.character.Name = '';
         this.character.Level = 1;
-        this.character.Gender = 'Masculino';
-        this.character.Race = 'Humano';
+        this.character.Gender = 1;
+        this.character.Race = 1;
+        this.character.Classe = 1
 
         this.state = {
             name: this.character.Name,
-            level: this.character.level,
-            gender: this.character.gender,
-            race: this.character.race
+            level: this.character.Level,
+            gender: this.character.Gender,
+            race: this.character.Race,
+            classe: this.character.Classe,
         }
     }
 
@@ -33,102 +37,134 @@ class Character extends Component {
         });
       };
 
-      handleSelectChange = event => {
+    handleSelectChange = event => {
         this.setState({ [event.target.name]: event.target.value });
-      }
-    
+    }
 
+    convertIntoCharacter = () => {
+        this.character.Name = this.state.name;
+        this.character.Level = this.state.level;
+        this.character.Gender = this.state.gender;
+        this.character.Race = this.state.race;
+        this.character.Classe = this.state.classe;
+    }
+    
     render() {
         return (
-            <Grid container>
-                <Grid item xs={12}>
-                    <h1>Ficha de Personagem</h1>
+            <div>
+                <Grid container spacing={40}>
+                    <Grid item xs={12}>
+                        <h1>Dados Básicos do Personagem</h1>
+                    </Grid>
                 </Grid>
 
-                <Grid item xs={12}>
-                    <TextField
-                        className="form-element"
-                        id="name"
-                        name="name"
-                        label="Nome"
-                        onChange={this.handleChange('name')}
-                        value={this.state.name}/>
-                </Grid>
-
-                <Grid item xs={12}>
-                    <TextField
-                        className="form-element"
-                        id="race"
-                        name="race"
-                        label="Raça"
-                        onChange={this.handleChange('race')}
-                        value={this.state.race}/>
-                </Grid>
-
-                <Grid item xs={12}>
-                    <FormControl style={{minWidth: '180px' }}
-                        className="form-element">
-                        <InputLabel htmlFor="level-simple">Nível</InputLabel>
-                        <Select
+                <Grid container spacing={40}>
+                    <Grid item xs>
+                        <TextField
                             className="form-element"
-                            value={this.state.level}
-                            onChange={this.handleChange('level')}
-                            inputProps={{
-                                name: 'level',
-                                id: 'level-simple',
-                            }}>
-                        
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                            <MenuItem value={4}>4</MenuItem>
-                            <MenuItem value={5}>5</MenuItem>
-                            <MenuItem value={6}>6</MenuItem>
-                            <MenuItem value={7}>7</MenuItem>
-                            <MenuItem value={8}>8</MenuItem>
-                            <MenuItem value={9}>9</MenuItem>
-                            <MenuItem value={10}>10</MenuItem>
-                        </Select>
-                    </FormControl>
+                            id="name"
+                            name="name"
+                            label="Nome"
+                            onChange={this.handleChange('name')}
+                            value={this.state.name}/>
+                    </Grid>
                 </Grid>
 
-                <Grid item xs={12}>
-                    <FormControl style={{minWidth: '180px' }}>
-                        <InputLabel htmlFor="gender-simple">Gênero</InputLabel>
-                        <Select
-                            className="form-element"
-                            value={this.state.level}
-                            onChange={this.handleChange('level')}
-                            inputProps={{
-                                name: 'gender',
-                                id: 'gender-simple',
-                            }}>
-                        
-                            <MenuItem value={1}>Masculino</MenuItem>
-                            <MenuItem value={2}>Feminino</MenuItem>
-                        </Select>
-                    </FormControl>
+                <Grid container spacing={40}>
+                    <Grid item xs>
+                        <FormControl style={{minWidth: '180px' }}
+                            className="form-element">
+                            <InputLabel htmlFor="race-simple">Raça</InputLabel>
+                            <Select
+                                className="form-element"
+                                value={this.state.race}
+                                onChange={this.handleChange('race')}
+                                inputProps={{
+                                    name: 'race',
+                                    id: 'race-simple',
+                                }}>
+                            
+                                <MenuItem value={1}>Humano</MenuItem>
+                                <MenuItem value={2}>Anão</MenuItem>
+                                <MenuItem value={3}>Elfo</MenuItem>
+                                <MenuItem value={4}>Halfling</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
                 </Grid>
 
-                <Grid item xs={6}>
-                    <Button style={{width: "80%", margin: '10%'}}
-                        color="primary" 
-                        size="large" 
-                        variant="contained">
-                        Salvar
-                    </Button>
+                <Grid container spacing={40}>
+                    <Grid item xs>
+                        <FormControl style={{minWidth: '180px' }}
+                            className="form-element">
+                            <InputLabel htmlFor="race-simple">Classes</InputLabel>
+                            <Select
+                                className="form-element"
+                                value={this.state.classe}
+                                onChange={this.handleChange('classe')}
+                                inputProps={{
+                                    name: 'class',
+                                    id: 'class-simple',
+                                }}>
+                            
+                                <MenuItem value={1}>Clérigo</MenuItem>
+                                <MenuItem value={2}>Homem de Armas</MenuItem>
+                                <MenuItem value={3}>Ladrão</MenuItem>
+                                <MenuItem value={4}>Mago</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
                 </Grid>
 
-                <Grid item xs={6}>
-                    <Button style={{width: "80%", margin: '10%'}}
-                        color="secondary" 
-                        size="large" 
-                        variant="contained">
-                        Limpar
-                    </Button>
+                <Grid container spacing={40}>
+                    <Grid item xs>
+                        <FormControl style={{minWidth: '180px' }}
+                            className="form-element">
+                            <InputLabel htmlFor="level-simple">Nível</InputLabel>
+                            <Select
+                                className="form-element"
+                                value={this.state.level}
+                                onChange={this.handleChange('level')}
+                                inputProps={{
+                                    name: 'level',
+                                    id: 'level-simple',
+                                }}>
+                            
+                                <MenuItem value={1}>1</MenuItem>
+                                <MenuItem value={2}>2</MenuItem>
+                                <MenuItem value={3}>3</MenuItem>
+                                <MenuItem value={4}>4</MenuItem>
+                                <MenuItem value={5}>5</MenuItem>
+                                <MenuItem value={6}>6</MenuItem>
+                                <MenuItem value={7}>7</MenuItem>
+                                <MenuItem value={8}>8</MenuItem>
+                                <MenuItem value={9}>9</MenuItem>
+                                <MenuItem value={10}>10</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
                 </Grid>
 
-            </Grid>
+                <Grid container spacing={40}>
+                    <Grid item xs>
+                        <FormControl style={{minWidth: '180px' }}>
+                            <InputLabel htmlFor="gender-simple">Gênero</InputLabel>
+                            <Select
+                                className="form-element"
+                                value={this.state.level}
+                                onChange={this.handleChange('level')}
+                                inputProps={{
+                                    name: 'gender',
+                                    id: 'gender-simple',
+                                }}>
+                            
+                                <MenuItem value={1}>Masculino</MenuItem>
+                                <MenuItem value={2}>Feminino</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
+            </div>
         );
     }
 }
